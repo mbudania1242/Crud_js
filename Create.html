@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Create New Customer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto+Slab:wght@100..900&display=swap');
+
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        /* Remove the arrow from number input */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="flex flex-col justify-center items-center mt-[30px]">
+        <h1 class=" text-purple-700 text-[35px] font-[800]"> Add New Customer</h1>
+        <div class="pt-[25px]">
+            <input
+                class="text-purple-600 text-[20px] p-[10px] m-[5px] border-[2px] border-purple-600 rounded-[10px] w-[400px] text-center"
+                type="text" id="Name" placeholder="Enter your Name"> <br>
+            <input
+                class="text-purple-600 text-[20px] p-[10px] border-[2px] border-purple-600 m-[5px] rounded-[10px] w-[400px] text-center"
+                type="email" id="Email" placeholder="Enter your Email">
+            <br>
+            <input
+                class="text-purple-600 text-[20px] p-[10px] m-[5px] border-[2px] border-purple-600 rounded-[10px] w-[400px] text-center"
+                type="number" maxlength="10" id="Phone" placeholder="Enter your Phone"> <br>
+            <input
+                class="text-purple-600 text-[20px] p-[10px] m-[5px] border-[2px] border-purple-600 rounded-[10px] w-[400px] text-center"
+                type="password" id="password" placeholder="Enter your password"> <br>
+            <button id="Submit"
+                class="text-[20px] bg-purple-700 p-[10px] m-[5px] w-[400px] text-[white] rounded-[10px] text-center hover:text-[black] hover:bg-[white] border-2 border-purple-700 transition ease-in-out duration-500">Submit</button>
+
+            <div class="pt-[15px] flex flex-col items-center">
+                <a class="text-[20px] bg-purple-700 p-[10px] w-[400px] text-[white] rounded-[10px] 
+            text-center hover:text-[black] hover:bg-[white] border-2 border-purple-700 transition ease-in-out duration-500"
+                    href="Read.html">All Customer</a>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>

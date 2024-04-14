@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>All Customer</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto+Slab:wght@100..900&display=swap');
+
+        body {
+            font-family: "Lato", sans-serif;
+        }
+    </style>
+
+</head>
+
+<body onload="allcustomer()">
+
+    <div class="flex flex-col items-center">
+        <h1 class="text-purple-600 font-[700] text-[30px]">List of all Customer</h1>
+        <div class="my-[25px]" id="showdiv"></div>
+    </div>
+
+
+    <div class="flex flex-col items-center">
+        <button
+            class="text-[20px] bg-purple-700 p-[10px] m-[5px] w-[300px] text-[white] rounded-[10px] text-center hover:text-[black] hover:bg-[white] border-2 border-purple-700 transition ease-in-out duration-500"
+            onclick="deleteUsingCheckbox()">Select for Delete</button>
+        <!-- </div>
+    <div class="pt-[15px] flex flex-col items-center"> -->
+        <a class="text-[20px] bg-purple-700 p-[10px] w-[300px] text-[white] rounded-[10px] 
+    text-center hover:text-[black] hover:bg-[white] border-2 border-purple-700 transition ease-in-out duration-500"
+            href="Create.html">Add New Customer</a>
+    </div>
+    <style>
+        /* Remove the arrow from number input */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.8);
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .modal-content {
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40vw;
+            margin: auto;
+            border: 1px solid red;
+            text-transform: capitalize;
+        }
+
+        .modal-content>* {
+            padding: 10px 20px;
+        }
+
+        * {
+            user-select: none;
+        }
+    </style>
+
+    <!-- modal -->
+    <div class="modal">
+        <div class="modal-content">
+            <div class="modal-header flex items-center justify-between border-b-2 border-[purple]">
+                <h1 id="name-of-person" class="text-purple-600 text-[20px]"></h1>
+                <span style="font-size: 30px;" role="button" id="close-modal" class="text-[purple] ">&times;</span>
+            </div>
+            <div class="modal-body flex flex-col items-center">
+                <input type="hidden" id="_id">
+                <p>Update your Name</p>
+                <input
+                    class="text-purple-600 text-[16px] p-[5px] m-[3px] border-[2px] border-purple-600 rounded-[10px] w-[300px] text-center"
+                    type="text" id="UName" placeholder="Enter your Name"> <br>
+                <p>Update your Email</p>
+                <input
+                    class="text-purple-600 text-[16px] p-[5px] m-[3px] border-[2px] border-purple-600 rounded-[10px] w-[300px] text-center"
+                    type="email" id="UEmail" placeholder="Enter your Email">
+                <br>
+                <p>Update your Phone</p>
+                <input
+                    class="text-purple-600 text-[16px] p-[5px] m-[3px] border-[2px] border-purple-600 rounded-[10px] w-[300px] text-center"
+                    type="number" maxlength="10" id="UPhone" placeholder="Enter your Phone"> <br>
+                <p>Update your Password</p>
+                <input
+                    class="text-purple-600 text-[16px] p-[5px] m-[3px] border-[2px] border-purple-600 rounded-[10px] w-[300px] text-center"
+                    type="password" id="Upassword" placeholder="Enter your password"> <br>
+                <button onclick="saveupdate()"
+                    class="text-[16px] bg-purple-700 p-[5px] m-[3px] w-[300px] text-[white] rounded-[10px]  hover:text-[black] hover:bg-[white] border-2 border-purple-700 transition ease-in-out duration-500">Save
+                    Changes</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('click', function (e) {
+            let editBtn = e.target.closest('.edit-btn');
+            if (editBtn) {
+                let modalData = editBtn.closest('tr');
+                let tds = modalData.querySelectorAll('td');
+                let show = {};
+                for (let index = 0; index < tds.length; index++) {
+                    const td = tds[index];
+                    let content = td.textContent.trim();
+                    switch (index) {
+                        case 0: show.id = td.querySelector('[type="checkbox"]').value; break;
+                        case 1: break;
+                        case 2: show.name = content; break;
+                        case 3: show.email = content; break;
+                        case 4: show.phone = content; break;
+                        case 5: show.password = content; break;
+                    }
+                }
+                fillinputforupdate(show);
+                // let modalBody = document.querySelector('.modal-body');
+                // modalBody.innerHTML = '';
+                // for (let key in show) {
+                //     modalBody.innerHTML += key + " : " + show[key] + "<br>";
+                // }
+                document.getElementById("name-of-person").textContent = "Hello " + show.name + " Update your Details";
+                document.querySelector('.modal').style.display = 'block';
+                return;
+            }
+            let closeBtn = e.target.closest('#close-modal');
+            if (closeBtn) {
+                document.querySelector('.modal').style.display = 'none';
+                return;
+            }
+        });
+        let fillinputforupdate = (data) => {
+            document.getElementById("_id").value = data.id
+            document.getElementById("UName").value = data.name;
+            document.getElementById("UEmail").value = data.email;
+            document.getElementById("UPhone").value = data.phone;
+            document.getElementById("Upassword").value = data.password;
+        }
+
+
+
+    </script>
+    <script src="index.js"></script>
+</body>
+
+</html>
